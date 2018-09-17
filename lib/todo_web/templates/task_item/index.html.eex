@@ -1,0 +1,45 @@
+<div>
+  <div class="tasks-container card mx-auto">
+    <div class="card-header">
+      <div class="pull-left">
+        <div class="card-title"><h2>Task List</h2></div>
+        <div class="card-subtitle"><%= current_timezone_date() %></div>
+      </div>
+      <div class="pull-right">
+        <button id="add-task" class="btn btn-success btn-lg" type="button" data-toggle="popover" data-title="Add Task" data-html="true">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+      <%= for task_item <- @task_items do %>
+        <div class="task-item">
+          <div class="pull-left">
+            <h3 class="task-title <%= if task_item.status, do: "strike" %> "><%= task_item.name %></h3>
+            <small><%= relative_time(task_item.accomplish_at) %></small>
+          </div>
+          <div class="pull-right checkbox-container">
+            <input type="checkbox" <%= if task_item.status, do: "checked" %> />
+            <span class="checkmark"></span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<form id="add-task-form" class="form d-none">
+  <div class="form-group">
+    <label for="task-item-name">Name: </label>
+    <input id="task-item-name" type="text" name="task_item[name]" class="form-control"/>
+  </div>
+  <div class="form-group">
+    <label for="task-item-description">Description: </label>
+    <textarea id="task-item-description" type="text" name="task_item[description]" class="form-control"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="task-item-accomplish-at">Accomplish At: </label>
+    <input id="task-item-accomplish-at" type="text" name="task_item[accomplish_at]" class="form-control"/>
+  </div>
+</form>

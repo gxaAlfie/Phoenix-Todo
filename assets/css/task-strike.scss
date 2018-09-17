@@ -1,0 +1,13 @@
+@keyframes strike {
+  from { text-decoration-color: transparent; }
+  to { text-decoration-color: auto; }
+}
+
+.task-title {
+  &.strike {
+    text-decoration: line-through;
+    animation: strike 150ms linear;
+    color: #cccccc;
+    transition: color 150ms linear;
+  }
+}
