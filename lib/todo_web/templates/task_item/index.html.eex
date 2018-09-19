@@ -6,7 +6,7 @@
         <div class="card-subtitle"><%= current_timezone_date() %></div>
       </div>
       <div class="pull-right">
-        <button id="add-task" class="btn btn-success btn-lg" type="button" data-toggle="popover" data-title="Add Task" data-html="true">
+        <button id="add-task" class="btn btn-success btn-lg" type="button" data-toggle="popover" data-title="New Task" data-html="true">
           <i class="fa fa-plus"></i>
         </button>
       </div>
@@ -15,13 +15,22 @@
     <div class="card-body">
       <%= for task_item <- @task_items do %>
         <div class="task-item">
-          <div class="pull-left">
-            <h3 class="task-title <%= if task_item.status, do: "strike" %> "><%= task_item.name %></h3>
+          <div class="pull-left task-item-details">
+            <h3>
+              <%= if old_unfinished_task?(task_item) do %>
+                <i class="fa fa-exclamation-circle unaccomplished"></i>
+              <% end %>
+              <span class="task-title<%= if task_item.status, do: " strike" %> ">
+                <%= task_item.name %>
+              </span>
+            </h3>
             <small><%= relative_time(task_item.accomplish_at) %></small>
           </div>
-          <div class="pull-right checkbox-container">
-            <input type="checkbox" <%= if task_item.status, do: "checked" %> />
-            <span class="checkmark"></span>
+          <div class="pull-right task-item-actions">
+            <div class="checkbox-container">
+              <input type="checkbox" <%= if task_item.status, do: "checked" %> />
+              <span class="checkmark"></span>
+            </div>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -29,17 +38,4 @@
     </div>
   </div>
 </div>
-<form id="add-task-form" class="form d-none">
-  <div class="form-group">
-    <label for="task-item-name">Name: </label>
-    <input id="task-item-name" type="text" name="task_item[name]" class="form-control"/>
-  </div>
-  <div class="form-group">
-    <label for="task-item-description">Description: </label>
-    <textarea id="task-item-description" type="text" name="task_item[description]" class="form-control"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="task-item-accomplish-at">Accomplish At: </label>
-    <input id="task-item-accomplish-at" type="text" name="task_item[accomplish_at]" class="form-control"/>
-  </div>
-</form>
+<%= render "add_task_form.html", conn: @conn %>

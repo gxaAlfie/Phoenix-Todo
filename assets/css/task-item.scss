@@ -1,0 +1,12 @@
+.task-item {
+  background: #fff;
+  border-bottom: 2px solid;
+  border-radius: 0px;
+  color: #2db7d2;
+  margin: 0 0 10px 0;
+  padding: 0 0 10px 0;
+
+  .unaccomplished {
+    color: #b30000;
+  }
+}

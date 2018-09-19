@@ -66,5 +66,8 @@ exports.config = {
       bootstrap: 'bootstrap',
       datetimepicker: 'jquery-datetimepicker'
     },
+    styles: {
+      'jquery-datetimepicker': ['jquery.datetimepicker.css']
+    }
   }
 };
