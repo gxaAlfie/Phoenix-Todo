@@ -16,7 +16,7 @@ defmodule TodoWeb.Router do
   scope "/", TodoWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", TaskItemController, :index
+    resources "/", TaskItemController, only: [:index, :create]
   end
 
   # Other scopes may use custom stacks.

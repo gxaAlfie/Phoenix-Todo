@@ -12,7 +12,7 @@
       </div>
       <div class="clearfix"></div>
     </div>
-    <div class="card-body">
+    <div class="card-body task-list">
       <%= for task_item <- @task_items do %>
         <div class="task-item">
           <div class="pull-left task-item-details">

@@ -10,20 +10,17 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 #
-alias Todo.Repo
-alias TodoWeb.TaskItem
+alias Todo.TaskList
+
 use Timex
 
 finished_tasks = ["Do Laundry", "Cook Breakfast", "Buy Groceries"]
 unfinished_tasks = ["Walk Dog", "Get Car Washed"]
 
-
 for unfinished_task <- unfinished_tasks do
-  task = TaskItem.changeset(%TaskItem{}, %{ name: unfinished_task, description: "", accomplish_at: Timex.now })
-  Repo.insert task
+  TaskList.add_task(%{ name: unfinished_task, description: "", accomplish_at: Timex.now })
 end
 
 for finished_task <- finished_tasks do
-  task = TaskItem.changeset(%TaskItem{}, %{ name: finished_task, description: "", accomplish_at: Timex.now, status: true })
-  Repo.insert task
+  TaskList.add_task(%{ name: finished_task, description: "", accomplish_at: Timex.now, status: true })
 end

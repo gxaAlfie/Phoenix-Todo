@@ -17,27 +17,18 @@ defmodule TodoWeb do
   and import those modules here.
   """
 
-  def model do
-    quote do
-      use Ecto.Schema
-
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
-    end
-  end
-
   def controller do
     quote do
       use Phoenix.Controller, namespace: TodoWeb
 
-      alias TodoWeb.Repo
       import Ecto
       import Ecto.Query
 
       import Plug.Conn
       import TodoWeb.Router.Helpers
       import TodoWeb.Gettext
+
+      alias Todo.Repo
     end
   end
 
