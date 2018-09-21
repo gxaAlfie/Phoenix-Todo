@@ -15,7 +15,15 @@
     color: #fff;
   }
 
-  .task-list {
-    overflow: auto;
+  .tab-content {
+    margin-top: 20px;
+  }
+
+  #nav-unfinished-tab {
+    border-radius: 20px 0px 0px 20px;
+  }
+
+  #nav-finished-tab {
+    border-radius: 0px 20px 20px 0px;
   }
 }

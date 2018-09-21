@@ -13,28 +13,18 @@
       <div class="clearfix"></div>
     </div>
     <div class="card-body task-list">
-      <%= for task_item <- @task_items do %>
-        <div class="task-item">
-          <div class="pull-left task-item-details">
-            <h3>
-              <%= if old_unfinished_task?(task_item) do %>
-                <i class="fa fa-exclamation-circle unaccomplished"></i>
-              <% end %>
-              <span class="task-title<%= if task_item.status, do: " strike" %> ">
-                <%= task_item.name %>
-              </span>
-            </h3>
-            <small><%= relative_time(task_item.accomplish_at) %></small>
-          </div>
-          <div class="pull-right task-item-actions">
-            <div class="checkbox-container">
-              <input type="checkbox" <%= if task_item.status, do: "checked" %> />
-              <span class="checkmark"></span>
-            </div>
-          </div>
-          <div class="clearfix"></div>
+      <div class="nav nav-tabs" role="tablist">
+        <a class="nav-item nav-link active" id="nav-unfinished-tab" data-toggle="tab" href="#nav-unfinished-tasks" role="tab" aria-controls="nav-unfinished-tasks" aria-selected="true">Unfinished</a>
+        <a class="nav-item nav-link" id="nav-finished-tab" data-toggle="tab" href="#nav-finished-tasks" role="tab" aria-controls="nav-finished-tasks" aria-selected="true">Finished</a>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="nav-unfinished-tasks" role="tabpanel" aria-labelledby="nav-unfinished-tab">
+          <%= render "list.html", task_items: @unfinished_task_items, is_finished: false %>
         </div>
-      <% end %>
+        <div class="tab-pane" id="nav-finished-tasks" role="tabpanel" aria-labelledby="nav-unfinished-tab">
+          <%= render "list.html", task_items: @finished_task_items, is_finished: true %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

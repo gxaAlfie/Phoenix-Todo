@@ -6,7 +6,9 @@ let datepicker = function() {
     }
   }).on("shown.bs.popover", function(){
     $(".popover-body #task-item-accomplish-at").datetimepicker({
-      closeOnDateSelect: true
+      format: 'Y/m/d H:00',
+      closeOnDateSelect: true,
+      minDate: 0
     })
     $(".popover-body .input-group-append").on("click", function(){
       $(".popover-body #task-item-accomplish-at").datetimepicker("show")

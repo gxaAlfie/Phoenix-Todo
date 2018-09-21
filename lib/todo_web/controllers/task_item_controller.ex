@@ -6,10 +6,17 @@ defmodule TodoWeb.TaskItemController do
   alias Todo.TaskList
 
   def index(conn, _params) do
-    task_items = TaskItem |> group_by([:id, :status])
-                          |> order_by([asc: :status, desc: :accomplish_at])
-                          |> Repo.all
-    render conn, "index.html", task_items: task_items
+    unfinished_task_items = TaskItem |> TaskList.unfinished
+                                     |> TaskList.nearest_to_deadline
+                                     |> Repo.all
+    finished_task_items   = TaskItem |> TaskList.finished
+                                     |> TaskList.nearest_to_deadline
+                                     |> Repo.all
+
+    render conn, "index.html", %{
+      unfinished_task_items: unfinished_task_items,
+      finished_task_items: finished_task_items
+    }
   end
 
   def create(conn, %{"task_item" => task_item_params}) do
@@ -25,7 +32,7 @@ defmodule TodoWeb.TaskItemController do
         |> redirect(to: task_item_path(conn, :index))
       { :error, _ } ->
         conn
-        |> put_flash(:info, "Task Item Failed to Add")
+        |> put_flash(:error, "Task Item Failed to Add")
         |> redirect(to: task_item_path(conn, :index))
     end
   end

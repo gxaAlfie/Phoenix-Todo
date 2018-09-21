@@ -1,0 +1,30 @@
+<%= for task_item <- @task_items do %>
+  <div class="task-item">
+    <div class="pull-left task-item-details">
+      <h3>
+        <%= if old_unfinished_task?(task_item) do %>
+          <i class="fa fa-exclamation-circle unaccomplished"></i>
+        <% end %>
+        <span class="task-title">
+          <%= task_item.name %>
+        </span>
+      </h3>
+      <small><%= relative_time(task_item.accomplish_at) %></small>
+    </div>
+    <div class="pull-right task-item-actions">
+      <div class="checkbox-container">
+        <input type="checkbox"/>
+        <span class="checkmark"></span>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+<% end %>
+
+<div class="multi-action-container">
+  <%= if @is_finished do %>
+    <button id="delete-task-item" type="button" class="btn btn-danger">Delete</button>
+  <%= else %>
+    <button id="update-task-item" type="button" class="btn btn-primary">Update</button>
+  <% end %>
+</div>

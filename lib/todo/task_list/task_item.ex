@@ -3,7 +3,6 @@ defmodule Todo.TaskList.TaskItem do
 
   schema "task_items" do
     field :name, :string
-    field :description, :string
     field :accomplish_at, :utc_datetime
     field :status, :boolean
 

@@ -1,0 +1,30 @@
+.btn-primary, .btn-primary:hover {
+  background-color: #31708f;
+  border-color: #31708f;
+  color: white;
+}
+
+.input-group-text, .popover-header {
+  background-color: #31708f;
+  color: white;
+}
+
+.popover-header {
+  padding: 15px 15px;
+}
+
+.nav-tabs {
+  border: none;
+
+  .nav-item {
+    background: #eee;
+    color: #2db7d2;
+    opacity: 0.5;
+
+    &.active {
+      background: #31708f;
+      color: white;
+      opacity: 1;
+    }
+  }
+}

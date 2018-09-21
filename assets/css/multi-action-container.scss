@@ -1,0 +1,29 @@
+.multi-action-container {
+  left: 40%;
+  position: absolute;
+  bottom: 10px;
+
+  .btn-primary {
+    border-radius: 20px;
+    background-color: #31708f;
+    border-color: #31708f;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(49, 112, 143, 0.5);
+    }
+  }
+
+  .btn-danger {
+    border-radius: 20px;
+    background-color: #b30000;
+    border-color: #b30000;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
+    }
+  }
+}
