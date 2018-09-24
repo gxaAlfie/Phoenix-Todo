@@ -6,6 +6,15 @@ let strikethrough = function() {
     } else {
       $taskTitle.removeClass("strike")
     }
+
+    var $categoryContainer = $(this).closest(".tab-pane")
+    var checkedItemsCount = $categoryContainer.find("input[type='checkbox']:checked").length
+
+    if(checkedItemsCount == 0) {
+      $categoryContainer.find(".multi-action-container button").prop("disabled", true)
+    } else {
+      $categoryContainer.find(".multi-action-container button").prop("disabled", false)
+    }
   })
 }
 

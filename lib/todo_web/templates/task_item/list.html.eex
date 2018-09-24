@@ -1,5 +1,5 @@
 <%= for task_item <- @task_items do %>
-  <div class="task-item">
+  <div class="task-item" data-id="<%= task_item.id %>">
     <div class="pull-left task-item-details">
       <h3>
         <%= if old_unfinished_task?(task_item) do %>
@@ -21,10 +21,7 @@
   </div>
 <% end %>
 
-<div class="multi-action-container">
-  <%= if @is_finished do %>
-    <button id="delete-task-item" type="button" class="btn btn-danger">Delete</button>
-  <%= else %>
-    <button id="update-task-item" type="button" class="btn btn-primary">Update</button>
-  <% end %>
+<div class="multi-action-container btn-group" data-finished="<%= @is_finished%>">
+  <button type="button" class="btn btn-primary update-task-item" disabled><%= if @is_finished, do: "Undo Finish", else: "Finish" %></button>
+  <button type="button" class="btn btn-danger delete-task-item" disabled>Delete</button>
 </div>

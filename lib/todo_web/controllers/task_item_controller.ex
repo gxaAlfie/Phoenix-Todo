@@ -20,10 +20,7 @@ defmodule TodoWeb.TaskItemController do
   end
 
   def create(conn, %{"task_item" => task_item_params}) do
-    params = Map.update!(task_item_params, "accomplish_at", fn current_value ->
-      { :ok, parsed_time } = Timex.parse(current_value, "%Y/%m/%d %H:%M", :strftime)
-      parsed_time
-    end)
+    params = Map.update!(task_item_params, "accomplish_at", &parse_time_param/1)
 
     case TaskList.add_task params do
       { :ok, _ } ->
@@ -37,13 +34,40 @@ defmodule TodoWeb.TaskItemController do
     end
   end
 
-  @doc """
-  If I need to implement update this is how i did it in iex though need
-  to adjust controller function
-  """
-  # def update(conn, _params)
-  #   task_item = Repo.get(TaskItem, <id>)
-  #   task_item = Ecto.Changeset.change, <map of items to change>
-  #   Repo.update task_item => this will return {:ok, task_item} if we need to match
-  # end
+  def update(conn, %{"status" => status}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render "update.json", message: "Select Items First"
+  end
+
+  def update(conn, %{ "id" => task_item_ids, "status" => status }) do
+    number_of_items = Kernel.length task_item_ids
+    case TaskList.update_matching_records_status(task_item_ids, status) do
+      { ^number_of_items, nil } ->
+        conn
+        |> put_status(:ok)
+        |> render "update.json", message: "Successfully updated #{number_of_items} task/s"
+    end
+  end
+
+  def delete(conn, %{ "id" => task_item_ids }) do
+    number_of_items = Kernel.length task_item_ids
+    case TaskList.delete_matching_records(task_item_ids) do
+      { ^number_of_items, nil } ->
+        conn
+        |> put_status(:ok)
+        |> render "delete.json", message: "Successfully deleted #{number_of_items} task/s"
+    end
+  end
+
+  def delete(conn, %{}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render "delete.json", message: "Select Items First"
+  end
+
+  defp parse_time_param(time_param) do
+    { :ok, parsed_time } = Timex.parse("#{time_param} Asia/Manila", "%Y/%m/%d %H:%M %Z", :strftime)
+    parsed_time
+  end
 end

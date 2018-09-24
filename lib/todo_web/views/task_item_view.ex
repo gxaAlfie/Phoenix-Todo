@@ -4,8 +4,7 @@ defmodule TodoWeb.TaskItemView do
 
   def old_unfinished_task?(task_item) do
     is_unfinished   = !task_item.status
-    accomplish_date = task_item.accomplish_at |> DateTime.to_date
-    is_old_task     = 1 == Timex.compare(Timex.today, accomplish_date)
+    is_old_task     = 1 == Timex.compare(Timex.now, task_item.accomplish_at)
 
     is_unfinished and is_old_task
   end
@@ -17,5 +16,17 @@ defmodule TodoWeb.TaskItemView do
   def relative_time(time) do
     {:ok, relative_time_str} = time |> Timex.format("{relative}", :relative)
     relative_time_str
+  end
+
+  def render("update.json", %{ message: message }) do
+    %{
+      message: message
+    }
+  end
+
+  def render("delete.json", %{ message: message }) do
+    %{
+      message: message
+    }
   end
 end

@@ -19,8 +19,10 @@ defmodule TodoWeb.Router do
     resources "/", TaskItemController, only: [:index, :create]
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", TodoWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", TodoWeb do
+    pipe_through :api
+
+    delete "/task_item", TaskItemController, :delete
+    put "/task_item", TaskItemController, :update
+  end
 end
