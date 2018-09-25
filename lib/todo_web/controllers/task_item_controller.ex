@@ -2,16 +2,11 @@ defmodule TodoWeb.TaskItemController do
   use TodoWeb, :controller
   use Timex
 
-  alias Todo.TaskList.TaskItem
   alias Todo.TaskList
 
   def index(conn, _params) do
-    unfinished_task_items = TaskItem |> TaskList.unfinished
-                                     |> TaskList.nearest_to_deadline
-                                     |> Repo.all
-    finished_task_items   = TaskItem |> TaskList.finished
-                                     |> TaskList.nearest_to_deadline
-                                     |> Repo.all
+    unfinished_task_items = TaskList.fetch_tasks_by_status(false)
+    finished_task_items = TaskList.fetch_tasks_by_status(true)
 
     render conn, "index.html", %{
       unfinished_task_items: unfinished_task_items,
