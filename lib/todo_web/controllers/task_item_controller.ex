@@ -34,20 +34,20 @@ defmodule TodoWeb.TaskItemController do
     end
   end
 
-  def update(conn, %{"status" => status}) do
-    conn
-    |> put_status(:unprocessable_entity)
-    |> render "update.json", message: "Select Items First"
-  end
-
   def update(conn, %{ "id" => task_item_ids, "status" => status }) do
     number_of_items = Kernel.length task_item_ids
     case TaskList.update_matching_records_status(task_item_ids, status) do
       { ^number_of_items, nil } ->
         conn
         |> put_status(:ok)
-        |> render "update.json", message: "Successfully updated #{number_of_items} task/s"
+        |> render("update.json", message: "Successfully updated #{number_of_items} task/s")
     end
+  end
+
+  def update(conn, %{"status" => _status}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render("update.json", message: "Select Items First")
   end
 
   def delete(conn, %{ "id" => task_item_ids }) do
@@ -56,14 +56,14 @@ defmodule TodoWeb.TaskItemController do
       { ^number_of_items, nil } ->
         conn
         |> put_status(:ok)
-        |> render "delete.json", message: "Successfully deleted #{number_of_items} task/s"
+        |> render("delete.json", message: "Successfully deleted #{number_of_items} task/s")
     end
   end
 
   def delete(conn, %{}) do
     conn
     |> put_status(:unprocessable_entity)
-    |> render "delete.json", message: "Select Items First"
+    |> render("delete.json", message: "Select Items First")
   end
 
   defp parse_time_param(time_param) do

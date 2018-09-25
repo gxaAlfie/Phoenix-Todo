@@ -35,16 +35,14 @@ defmodule Todo.TaskList do
   end
 
   def add_task(attrs \\ %{}) do
-    %TaskItem{}
-    |> task_item_changeset(attrs)
-    |> unique_constraint(:name)
-    |> validate_required([:name, :accomplish_at])
-    |> Repo.insert()
+    %TaskItem{} |> task_item_changeset(attrs)
+                |> unique_constraint(:name)
+                |> validate_required([:name, :accomplish_at])
+                |> Repo.insert()
   end
 
   defp task_item_changeset(%TaskItem{} = task_item, attrs) do
-    task_item
-    |> cast(attrs, [:name, :accomplish_at, :status])
+    task_item |> cast(attrs, [:name, :accomplish_at, :status])
   end
 
   defp fetch_records_by_id(query, ids) do
